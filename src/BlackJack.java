@@ -7,8 +7,18 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class blackJack {
-    public static void main(String[] args) {
+public class BlackJack {
+    private int numOfDeck;
+    private int numOfPlayer;
+
+    public BlackJack() {}
+
+    public BlackJack(int numOfDeck, int numOfPlayer) {
+        this.numOfDeck = numOfDeck;
+        this.numOfPlayer = numOfPlayer;
+    }
+
+    public void start() {
         //		Card card=new Card();
         Player player = new Player();
 
