@@ -1,17 +1,18 @@
 package models.constants;
 
 public enum Suit {
-    HEART("heart"),
-    SPADE("spade"),
-    DIAMOND("diamond"),
-    CLUB("club");
+    HEART('\u2764'),
+    SPADE('\u2660'),
+    DIAMOND('\u2666'),
+    CLUB('\u2663');
 
-    private String displayName;
-    Suit(String displayName) {
+    private char displayName;
+
+    Suit(char displayName) {
         this.displayName = displayName;
     }
 
-    public String getDisplayName() {
+    public char getDisplayName() {
         return this.displayName;
     }
 }

@@ -45,8 +45,12 @@ public class Cards {
             }
         }
 
-        for (int i = 0; i < 9999999; i ++) {
-            Collections.shuffle(allCards);
+        shuffleCards(allCards);
+    }
+
+    public static void shuffleCards(List<Card> cards) {
+        for (int i = 0; i < 9999; i ++) {
+            Collections.shuffle(cards);
         }
     }
 }
