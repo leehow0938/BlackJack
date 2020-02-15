@@ -38,6 +38,8 @@ public class BlackJack {
 
         boolean continueGame = false;
         int headPointer = 0;
+
+        int gameCount = 0;
         do {
             System.out.println("==========================================");
             System.out.println(String.format("Dealer name: %s Role: %s Chips: %d",
@@ -96,8 +98,7 @@ public class BlackJack {
                         break;
                     } else {
                         // if no boommmmm
-                        System.out.println("Please answer: ");
-                        answer = in.nextLine();
+                        answer = checkStrategy(dealerFirstCard.getPoint().getValue(), player.getHandCardsSum());
                     }
                 }
             }
@@ -144,8 +145,8 @@ public class BlackJack {
                 player.clearHandCards();
             }
 
-            System.out.print("Play again? ");
-            continueGame = YES.equals(in.nextLine());
+//            System.out.print("Play again? ");
+//            continueGame = YES.equals(in.nextLine());
 
             // check if cards use up
             if (headPointer > cards.getAllCards().size() - 35) {
@@ -153,9 +154,13 @@ public class BlackJack {
                 headPointer = 0;
             }
 
-        } while (continueGame);
-        // verify basic strategy
+            gameCount ++;
+        } while (gameCount < 10000);
 
+        // verify basic strategy
+        System.out.println("Dealer results: " + players.getDealer().getChips());
+        System.out.println(String.format("Player1 name:%s, chips: %s ", players.getPlayers().get(0).getName(), players.getPlayers().get(0).getChips()));
+        System.out.println(String.format("Player2 name:%s, chips: %s ", players.getPlayers().get(1).getName(), players.getPlayers().get(1).getChips()));
     }
 
     private void showPlayerHandCards(Player player) {
@@ -168,26 +173,50 @@ public class BlackJack {
 
     // TODO: Please implement this function
     private String checkStrategy(int dealerFirstCard, int playerSum) {
-        String strategy[][]= new String[21][10];
-        for(playerSum=1; playerSum<22; playerSum++){
-            for(dealerFirstCard=1; dealerFirstCard<11; dealerFirstCard++){
-                if(playerSum<=11){
-                    strategy[playerSum][dealerFirstCard]="Y";
+        String strategy[][] = new String[21][10];
+        int playerIndex = playerSum - 1;
+
+        int dealerIndex = dealerFirstCard;
+        if (dealerIndex == 1) {
+            dealerIndex = 9;
+        } else {
+            dealerIndex -= 2;
+        }
+
+        for (int rowIndex = 0; rowIndex < 21; rowIndex ++) {
+            for (int colIndex = 0; colIndex < 10; colIndex ++) {
+                if (rowIndex < 11) {
+                    strategy[rowIndex][colIndex] = "Y";
                 }
-                else if(playerSum==12 && (dealerFirstCard==4||dealerFirstCard==5||dealerFirstCard==6)){
-                    strategy[playerSum][dealerFirstCard]="N";
+                else if(rowIndex == 11 && (colIndex >= 2 && colIndex<=4)){
+                    strategy[rowIndex][colIndex]="N";
                 }
-                else if(playerSum>=13 && (dealerFirstCard>=2 && dealerFirstCard<=6)){
-                    strategy[playerSum][dealerFirstCard]="N";
+                else if(rowIndex >= 12 && rowIndex <= 16 && colIndex <= 4){
+                    strategy[rowIndex][colIndex]="N";
                 }
-                else if(playerSum==17){
-                    strategy[playerSum][dealerFirstCard]="N";
+                else if(rowIndex >= 16){
+                    strategy[rowIndex][colIndex]="N";
                 }
                 else{
-                    strategy[playerSum][dealerFirstCard]="Y";
+                    strategy[rowIndex][colIndex]="Y";
                 }
             }
         }
-        return strategy[playerSum][dealerFirstCard];
+
+//        for (int i = 0; i < 21 ; i ++) {
+//            System.out.print(i + " ");
+//            for (int j = 0; j < 10; j ++) {
+//                System.out.print(strategy[i][j] + " ");
+//            }
+//            System.out.println();
+//        }
+
+        try {
+            System.out.println("Decision: " + strategy[playerIndex][dealerIndex]);
+            return strategy[playerIndex][dealerIndex];
+        } catch (Exception e) {
+            System.out.println(String.format("Play: %s, Deal: %s", playerIndex, dealerIndex));
+            throw e;
+        }
     }
 }
