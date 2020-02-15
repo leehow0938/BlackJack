@@ -79,8 +79,8 @@ public class BlackJack {
 //                System.out.println("Please answer: ");
 //                String answer = in.nextLine();
                 // H (Hit) == "y", S (Stand) = "n"
-                String answer = checkStrategy(dealerFirstCard, playerSum);
-                while (YES.equals(answer)) {
+                String answer = checkStrategy(dealerFirstCard.getPoint().getValue(), player.getHandCardsSum());
+                while ("Y".equals(answer)) {
 
                     player.getHandCards().add(allCards.get(headPointer ++));
                     showPlayerHandCards(player);
@@ -167,6 +167,26 @@ public class BlackJack {
     }
 
     private String checkStrategy(int dealerFirstCard, int playerSum) {
-
+        String strategy[][]= new String[21][10];
+        for(playerSum=1; playerSum<22; playerSum++){
+            for(dealerFirstCard=1; dealerFirstCard<11; dealerFirstCard++){
+                if(playerSum<=11){
+                    strategy[playerSum][dealerFirstCard]="Y";
+                }
+                else if(playerSum==12 && (dealerFirstCard==4||dealerFirstCard==5||dealerFirstCard==6)){
+                    strategy[playerSum][dealerFirstCard]="N";
+                }
+                else if(playerSum>=13 && (dealerFirstCard>=2 && dealerFirstCard<=6)){
+                    strategy[playerSum][dealerFirstCard]="N";
+                }
+                else if(playerSum==17){
+                    strategy[playerSum][dealerFirstCard]="N";
+                }
+                else{
+                    strategy[playerSum][dealerFirstCard]="Y";
+                }
+            }
+        }
+        return strategy[playerSum][dealerFirstCard];
     }
 }
