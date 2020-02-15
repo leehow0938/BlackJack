@@ -166,6 +166,7 @@ public class BlackJack {
         System.out.println("Total: " + player.getHandCardsSum());
     }
 
+    // TODO: Please implement this function
     private String checkStrategy(int dealerFirstCard, int playerSum) {
         String strategy[][]= new String[21][10];
         for(playerSum=1; playerSum<22; playerSum++){

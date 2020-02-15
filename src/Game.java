@@ -1,6 +1,6 @@
 public class Game {
     public static void main(String []args) {
-        BlackJack bj = new BlackJack(5,2);
+        BlackJack bj = new BlackJack(8,2);
         bj.start();
     }
 }
